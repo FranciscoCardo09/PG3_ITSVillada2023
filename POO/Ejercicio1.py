@@ -1,11 +1,15 @@
 class Persona:
 
-    def __init__(self):
-        self.nombre=input("Ingrese el nombre del empleado:")
+    def inicializar(self,nom):
+        self.nombre=nom
 
     def imprimir(self):
-        print("Nombre:",self.nombre)
-
+        print("Nombre",self.nombre)
 
 persona1=Persona()
+persona1.inicializar("Messi")
 persona1.imprimir()
+
+persona2=Persona()
+persona2.inicializar("Ronaldo")
+persona2.imprimir()
