@@ -13,8 +13,6 @@ def division():
             if continuar.lower() != 's':
                 break
 
-        except ValueError:
-            print("Error: Por favor, ingrese solo números.")
         except ZeroDivisionError:
             print("Error: No se puede dividir por cero.")
 
