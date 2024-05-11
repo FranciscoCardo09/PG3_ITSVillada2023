@@ -162,27 +162,19 @@
 
     ```python
     import requests
+    import pandas as pd
     from weasyprint import HTML
 
-    def obtener_usuarios():
-        response = requests.get("https://reqres.in/api/users")
-        data = response.json()["data"]
-        return data
+    # Obtener datos de la API ReqRes
+    response = requests.get("https://reqres.in/api/users")
+    data = response.json()["data"]
 
-    def generar_tabla(usuarios):
-        tabla = "| ID | Nombre | Avatar |\n"
-        tabla += "| --- | --- | --- |\n"
+    # Procesar los datos
+    df = pd.DataFrame(data)
 
-        for usuario in usuarios:
-            tabla += f"| {usuario['id']} | {usuario['first_name']} {usuario['last_name']} | ![Avatar]({usuario['avatar']}) |\n"
+    # Generar tabla HTML
+    html_table = df.to_html()
 
-        return tabla
-
-    if __name__ == "__main__":
-        usuarios = obtener_usuarios()
-        tabla = generar_tabla(usuarios)
-
-        html = f"<pre>{tabla}</pre>"
-
-        HTML(string=html).write_pdf("usuarios.pdf")
+    # Generar archivo PDF
+    HTML(string=html_table).write_pdf("usuarios.pdf")
     ```
