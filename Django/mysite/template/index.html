@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista Usuarios</title>
+</head>
+<body>
+    <h1>Lista Usuarios</h1>
+
+    <form method="get">
+        <div>
+            <label for="search">Buscar: </label>
+            <input type="text" id="search" name="search" value="{{ search_query }}">
+            <button type="submit">Buscar</button>
+        </div>
+        <div>
+            <label for="user_count">Cantidad de Usuarios: </label>
+            <input type="number" id="user_count" name="user_count" value="{{ user_count }}" min="1" max="100">
+        </div>
+        <div>
+            <label><input type="checkbox" name="fields" value="id" {% if 'id' in selected_fields %}checked{% endif %}> ID</label>
+            <label><input type="checkbox" name="fields" value="email" {% if 'email' in selected_fields %}checked{% endif %}> Email</label>
+            <label><input type="checkbox" name="fields" value="first_name" {% if 'first_name' in selected_fields %}checked{% endif %}> Nombre</label>
+            <label><input type="checkbox" name="fields" value="last_name" {% if 'last_name' in selected_fields %}checked{% endif %}> Apellido</label>
+            <label><input type="checkbox" name="fields" value="avatar" {% if 'avatar' in selected_fields %}checked{% endif %}> Avatar</label>
+            <button type="submit">Mostrar</button>
+        </div>
+    </form>
+
+    <table>
+        <thead>
+            <tr>
+                {% if 'id' in selected_fields %}<th>ID</th>{% endif %}
+                {% if 'email' in selected_fields %}<th>Email</th>{% endif %}
+                {% if 'first_name' in selected_fields %}<th>Nombre</th>{% endif %}
+                {% if 'last_name' in selected_fields %}<th>Apellido</th>{% endif %}
+                {% if 'avatar' in selected_fields %}<th>Avatar</th>{% endif %}
+            </tr>
+        </thead>
+        <tbody>
+            {% for user in user_list %}
+                <tr>
+                    {% if 'id' in selected_fields %}<td>{{ user.id }}</td>{% endif %}
+                    {% if 'email' in selected_fields %}<td>{{ user.email }}</td>{% endif %}
+                    {% if 'first_name' in selected_fields %}<td>{{ user.first_name }}</td>{% endif %}
+                    {% if 'last_name' in selected_fields %}<td>{{ user.last_name }}</td>{% endif %}
+                    {% if 'avatar' in selected_fields %}<td><img src="{{ user.avatar }}" alt="Avatar" width="50"></td>{% endif %}
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f0f0f0;
+        margin: 0;
+        padding: 20px;
+    }
+    
+    h1 {
+        text-align: center;
+        color: #333;
+    }
+    
+    form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+    
+    form div {
+        margin: 10px 0;
+    }
+    
+    label {
+        margin-right: 10px;
+    }
+    
+    input[type="text"], input[type="number"], button {
+        padding: 5px;
+        margin: 5px 0;
+    }
+    
+    input[type="checkbox"] {
+        margin-right: 5px;
+    }
+    
+    button {
+        padding: 10px 20px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        cursor: pointer;
+        border-radius: 5px;
+    }
+    
+    button:hover {
+        background-color: #0056b3;
+    }
+    
+    table {
+        width: 80%;
+        margin: 0 auto;
+        border-collapse: collapse;
+        background-color: white;
+    }
+    
+    th, td {
+        padding: 10px;
+        border: 1px solid #ddd;
+        text-align: center;
+    }
+    
+    th {
+        background-color: #007bff;
+        color: white;
+    }
+    
+    td img {
+        border-radius: 50%;
+    }
+    
+</style>
