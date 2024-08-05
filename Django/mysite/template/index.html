@@ -1,128 +1,96 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lista Usuarios</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f0f0f0;
+            padding: 20px;
+        }
+        
+        table {
+            background-color: white;
+        }
+        
+        td img {
+            border-radius: 50%;
+        }
+    </style>
 </head>
+
 <body>
-    <h1>Lista Usuarios</h1>
+    <div class="container">
+        <h1 class="text-center mb-4">Lista Usuarios</h1>
 
-    <form method="get">
-        <div>
-            <label for="search">Buscar: </label>
-            <input type="text" id="search" name="search" value="{{ search_query }}">
-            <button type="submit">Buscar</button>
-        </div>
-        <div>
-            <label for="user_count">Cantidad de Usuarios: </label>
-            <input type="number" id="user_count" name="user_count" value="{{ user_count }}" min="1" max="100">
-        </div>
-        <div>
-            <label><input type="checkbox" name="fields" value="id" {% if 'id' in selected_fields %}checked{% endif %}> ID</label>
-            <label><input type="checkbox" name="fields" value="email" {% if 'email' in selected_fields %}checked{% endif %}> Email</label>
-            <label><input type="checkbox" name="fields" value="first_name" {% if 'first_name' in selected_fields %}checked{% endif %}> Nombre</label>
-            <label><input type="checkbox" name="fields" value="last_name" {% if 'last_name' in selected_fields %}checked{% endif %}> Apellido</label>
-            <label><input type="checkbox" name="fields" value="avatar" {% if 'avatar' in selected_fields %}checked{% endif %}> Avatar</label>
-            <button type="submit">Mostrar</button>
-        </div>
-    </form>
+        <form method="get" class="mb-4">
+            <div class="form-group">
+                <label for="search">Buscar:</label>
+                <input type="text" id="search" name="search" class="form-control" value="{{ search_query }}">
+            </div>
+            <div class="form-group">
+                <label for="user_count">Cantidad de Usuarios:</label>
+                <input type="number" id="user_count" name="user_count" class="form-control" value="{{ user_count }}" min="1" max="100">
+            </div>
+            <div class="form-group">
+                <div class="form-check">
+                    <input type="checkbox" id="id" name="fields" value="id" class="form-check-input" {% if 'id' in selected_fields %}checked{% endif %}>
+                    <label for="id" class="form-check-label">ID</label>
+                </div>
+                <div class="form-check">
+                    <input type="checkbox" id="email" name="fields" value="email" class="form-check-input" {% if 'email' in selected_fields %}checked{% endif %}>
+                    <label for="email" class="form-check-label">Email</label>
+                </div>
+                <div class="form-check">
+                    <input type="checkbox" id="first_name" name="fields" value="first_name" class="form-check-input" {% if 'first_name' in selected_fields %}checked{% endif %}>
+                    <label for="first_name" class="form-check-label">Nombre</label>
+                </div>
+                <div class="form-check">
+                    <input type="checkbox" id="last_name" name="fields" value="last_name" class="form-check-input" {% if 'last_name' in selected_fields %}checked{% endif %}>
+                    <label for="last_name" class="form-check-label">Apellido</label>
+                </div>
+                <div class="form-check">
+                    <input type="checkbox" id="avatar" name="fields" value="avatar" class="form-check-input" {% if 'avatar' in selected_fields %}checked{% endif %}>
+                    <label for="avatar" class="form-check-label">Avatar</label>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary">Mostrar</button>
+        </form>
 
-    <table>
-        <thead>
-            <tr>
-                {% if 'id' in selected_fields %}<th>ID</th>{% endif %}
-                {% if 'email' in selected_fields %}<th>Email</th>{% endif %}
-                {% if 'first_name' in selected_fields %}<th>Nombre</th>{% endif %}
-                {% if 'last_name' in selected_fields %}<th>Apellido</th>{% endif %}
-                {% if 'avatar' in selected_fields %}<th>Avatar</th>{% endif %}
-            </tr>
-        </thead>
-        <tbody>
-            {% for user in user_list %}
+        <table class="table table-striped">
+            <thead class="thead-dark">
                 <tr>
-                    {% if 'id' in selected_fields %}<td>{{ user.id }}</td>{% endif %}
-                    {% if 'email' in selected_fields %}<td>{{ user.email }}</td>{% endif %}
-                    {% if 'first_name' in selected_fields %}<td>{{ user.first_name }}</td>{% endif %}
-                    {% if 'last_name' in selected_fields %}<td>{{ user.last_name }}</td>{% endif %}
-                    {% if 'avatar' in selected_fields %}<td><img src="{{ user.avatar }}" alt="Avatar" width="50"></td>{% endif %}
+                    {% if 'id' in selected_fields %}
+                    <th>ID</th>{% endif %} {% if 'email' in selected_fields %}
+                    <th>Email</th>{% endif %} {% if 'first_name' in selected_fields %}
+                    <th>Nombre</th>{% endif %} {% if 'last_name' in selected_fields %}
+                    <th>Apellido</th>{% endif %} {% if 'avatar' in selected_fields %}
+                    <th>Avatar</th>{% endif %}
                 </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-</body>
-</html>
+            </thead>
+            <tbody>
+                {% for user in user_list %}
+                <tr>
+                    {% if 'id' in selected_fields %}
+                    <td>{{ user.id }}</td>{% endif %} {% if 'email' in selected_fields %}
+                    <td>{{ user.email }}</td>{% endif %} {% if 'first_name' in selected_fields %}
+                    <td>{{ user.first_name }}</td>{% endif %} {% if 'last_name' in selected_fields %}
+                    <td>{{ user.last_name }}</td>{% endif %} {% if 'avatar' in selected_fields %}
+                    <td><img src="{{ user.avatar }}" alt="Avatar" width="50"></td>{% endif %}
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
 
-<style>
-    body {
-        font-family: Arial, sans-serif;
-        background-color: #f0f0f0;
-        margin: 0;
-        padding: 20px;
-    }
-    
-    h1 {
-        text-align: center;
-        color: #333;
-    }
-    
-    form {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        margin-bottom: 20px;
-    }
-    
-    form div {
-        margin: 10px 0;
-    }
-    
-    label {
-        margin-right: 10px;
-    }
-    
-    input[type="text"], input[type="number"], button {
-        padding: 5px;
-        margin: 5px 0;
-    }
-    
-    input[type="checkbox"] {
-        margin-right: 5px;
-    }
-    
-    button {
-        padding: 10px 20px;
-        background-color: #007bff;
-        color: white;
-        border: none;
-        cursor: pointer;
-        border-radius: 5px;
-    }
-    
-    button:hover {
-        background-color: #0056b3;
-    }
-    
-    table {
-        width: 80%;
-        margin: 0 auto;
-        border-collapse: collapse;
-        background-color: white;
-    }
-    
-    th, td {
-        padding: 10px;
-        border: 1px solid #ddd;
-        text-align: center;
-    }
-    
-    th {
-        background-color: #007bff;
-        color: white;
-    }
-    
-    td img {
-        border-radius: 50%;
-    }
-    
-</style>
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+</html>
