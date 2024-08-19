@@ -1,6 +1,6 @@
 import requests
 from django.shortcuts import render
-from django.views import View
+from django.views.generic import TemplateView
 
 def home(request):
     try:
@@ -28,6 +28,13 @@ def home(request):
     except Exception as e:
         return render(request, "error.html", {'message': str(e)})
 
-class ejercicio2(View):
-    def get(self, request):
-        return render(request, 'ejercicio2.html')
+class ejercicio2(TemplateView):
+    template_name = "ejercicio2.html"
+
+    def get_context_data(self, **kwargs: any) -> dict[str, any]:
+        context = super().get_context_data(**kwargs)
+        res = requests.get("https://www.cultura.gob.ar/api/v2.0/museos/")
+        res_json = res.json()
+        museos_res = res_json.get('results')
+        context['museos'] = museos_res
+        return context
