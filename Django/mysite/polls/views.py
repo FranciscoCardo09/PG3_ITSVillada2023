@@ -1,5 +1,6 @@
 import requests
 from django.shortcuts import render
+from django.views import View
 
 def home(request):
     try:
@@ -26,3 +27,7 @@ def home(request):
             return render(request, "error.html", {'message': 'Error al obtener datos de la API'})
     except Exception as e:
         return render(request, "error.html", {'message': str(e)})
+
+class ejercicio2(View):
+    def get(self, request):
+        return render(request, 'ejercicio2.html')
