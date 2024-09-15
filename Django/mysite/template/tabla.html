@@ -1,0 +1,68 @@
+<h1>Lista de Autores, Libros y Préstamos</h1>
+
+<!-- Tabla de Autores -->
+<h2>Autores</h2>
+<table>
+    <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Fecha de Nacimiento</th>
+            <th>Nacionalidad</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for autor in autores %}
+        <tr>
+            <td>{{ autor.nombre }}</td>
+            <td>{{ autor.fecha_nacimiento }}</td>
+            <td>{{ autor.nacionalidad }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<!-- Tabla de Libros -->
+<h2>Libros</h2>
+<table>
+    <thead>
+        <tr>
+            <th>Título</th>
+            <th>Autor</th>
+            <th>Fecha de Publicación</th>
+            <th>Disponibilidad</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for libro in libros %}
+        <tr>
+            <td>{{ libro.titulo }}</td>
+            <td>{{ libro.autor.nombre }}</td>
+            <td>{{ libro.fecha_publicacion }}</td>
+            <td>{{ libro.disponibilidad|yesno:"Sí,No" }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<!-- Tabla de Préstamos -->
+<h2>Préstamos</h2>
+<table>
+    <thead>
+        <tr>
+            <th>Libro</th>
+            <th>Fecha de Préstamo</th>
+            <th>Fecha de Devolución</th>
+            <th>Prestado a</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for prestamo in prestamos %}
+        <tr>
+            <td>{{ prestamo.libro.titulo }}</td>
+            <td>{{ prestamo.fecha_prestamo }}</td>
+            <td>{{ prestamo.fecha_devolucion|default:"Sin devolver" }}</td>
+            <td>{{ prestamo.prestado_a }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>

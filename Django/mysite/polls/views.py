@@ -38,3 +38,59 @@ class ejercicio2(TemplateView):
         museos_res = res_json.get('results')
         context['museos'] = museos_res
         return context
+    
+from django.views.generic import TemplateView, FormView
+from django.urls import reverse
+from .forms import AutorForm, LibroForm
+from .models import Autor, Libro
+
+class AutorCreateView(FormView):
+    template_name = 'autor_form.html'
+    form_class = AutorForm
+
+    def get_success_url(self):
+        return reverse('crear_libro')
+    
+    def form_valid(self, form):
+        form.save()  
+        return super().form_valid(form)
+
+class LibroCreateView(FormView):
+    template_name = 'libro_form.html'
+    form_class = LibroForm
+    
+    def get_success_url(self):
+        return reverse('crear_prestamo')
+    
+    def form_valid(self, form):
+        form.save()
+        return super().form_valid(form)
+
+    def form_invalid(self, form):
+        print(form.errors)
+        return super().form_invalid(form)
+    
+from .forms import PrestamoForm
+    
+class PrestamoCreateView(FormView):
+    template_name = 'prestamo_form.html'
+    form_class = PrestamoForm
+
+    def get_success_url(self):
+        return reverse('tabla')
+
+    def form_valid(self, form):
+        form.save()  
+        return super().form_valid(form)
+    
+from .models import Autor, Libro, Prestamo
+
+class TablaView(TemplateView):
+    template_name = 'tabla.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['autores'] = Autor.objects.all()
+        context['libros'] = Libro.objects.all()
+        context['prestamos'] = Prestamo.objects.all()
+        return context
